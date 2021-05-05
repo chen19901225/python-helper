@@ -158,6 +158,7 @@ export function getLineIndent(line: string) {
             return i;
         }
     }
+    throw Error(`lin error [${line}]`)
 }
 
 export function extraVariablePart(var_and_function: string) {

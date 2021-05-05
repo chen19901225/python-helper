@@ -14,15 +14,228 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:python-helper.helloWorld"
+		"*"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "python-helper.helloWorld",
-				"title": "Hello World"
-			}
+				"command": "cqh-python-import-helper.import-upgrade",
+				"title": "cqh python import import upgrade"
+			},
+			{
+				"command": "cqh-python-import-helper.function_apply_self",
+				"title": "cqh python import def apply self"
+			},
+			{
+				"command": "cqh-python-import-helper.get_parent_args_dict",
+				"title": "cqh python import get caller args"
+			},
+			{
+				"command": "cqh-python-import-helper.get_parent_name",
+				"title": "cqh python import get caller function name"
+			},
+			{
+                "command": "cqh-python-import-helper.dict_unpack",
+                "title": "cqh python import dict unpack"
+            },
+			{
+                "command": "cqh-python-import-helper.dict_prepend",
+                "title": "cqh python import dict prepend"
+            },
+			{
+                "command": "cqh-python-import-helper.get_left_pattern",
+                "title": "cqh-python-import-helper.get_left_pattern"
+            },
+			{
+                "command": "cqh-python-import-helper.get_last_if_variable",
+                "title": "cqh-python-import get last if variable"
+            },
+			{
+                "command": "cqh-python-import-helper.get_last_line_variable",
+                "title": "cqh-python-import-helper.get_last_line_variable"
+            },
+			{
+                "command": "cqh-python-import-helper.show_var_list",
+                "title": "cqh python import helper show var list"
+            },
+			{
+                "command": "cqh-python-import-helper.get_current_filename",
+                "title": "cqh-python get current filename"
+            },
+            {
+                "command": "cqh-python-import-helper.get_last_used_variable",
+                "title": "cqh python get last ued variable"
+            },
+            
+            {
+                "command": "cqh-python-import-helper.get_current_classname",
+                "title": "cqh python get current handler name"
+            },
+			{
+                "command": "cqh-python-import-helper.insert_base",
+                "title": "Cqh python import insert base"
+            },
+			{
+                "command": "cqh-python-import-helper.export_class_to_module",
+                "title": "Cqh python export class to module"
+            },
+            {
+                "command": "cqh-python-import-helper.tornado_export_class_to_urls",
+                "title": "cqh python tornado export class to urls"
+            },
+            {
+                "command": "cqh-python-import-helper.cqh_run_pytest_in_terminal",
+                "title": "cqh-python-import-helper.cqh_run_pytest_in_terminal"
+            },
+			{
+                "command": "cqh-python-import-helper.node-format",
+                "title": "cqh python import helper node format"
+            },
+			{
+                "command": "cqh-python-import-helper.handler-var",
+                "title": "cqh python import helper handler var"
+            },
+			{
+                "command": "cqh-python-import-helper.insert-last-import",
+                "title": "cqh-python-import-helper insert last import"
+            },
+			{
+                "command": "cqh-python-import-helper.select-history-cusor",
+                "title": "cqh-python-import-helper.select-history-cusor"
+            },
+			{
+                "command": "cqh-python-import-helper.get_var_from_comment",
+                "title": "cqh python  import helper get var from comment"
+            },
+            {
+                "command": "cqh-python-import-helper.get_var_from_model",
+                "title": "cqh python import helper get var from model"
+            },
+			{
+                "command": "cqh-python-import-helper.cqh_run_pytest_in_terminal",
+                "title": "cqh-python-import-helper.cqh_run_pytest_in_terminal"
+            }
+			
+		],
+		"menus": {
+			"editor/context": [
+				{
+                    "when": "!inOutput && editorTextFocus && editorLangId == python",
+                    "command": "cqh-python-import-helper.insert_base",
+                    "group": "cqh-insert"
+                },
+				{
+                    "when": "!inOutput && editorTextFocus && editorLangId == python",
+                    "command": "cqh-python-import-helper.export_class_to_module",
+                    "group": "cqh-insert"
+                },
+                {
+                    "when": "!inOutput && editorTextFocus && editorLangId == python",
+                    "command": "cqh-python-import-helper.cqh_run_pytest_in_terminal",
+                    "group": "cqh"
+                },
+                {
+                    "when": "!inOutput && editorTextFocus && editorLangId == python",
+                    "command": "cqh-python-import-helper.tornado_export_class_to_urls",
+                    "group": "cqh-insert"
+                }
+			]
+		},
+		"keybindings": [
+			{
+				"command": "cqh-python-import-helper.import-upgrade",
+				"key": "alt+k u",
+				"when": "editorTextFocus && !editorHasSelection && editorLangId==python"
+			},
+			{
+				"command": "cqh-python-import-helper.function_apply_self",
+				"key": "alt+-",
+				"when": "editorTextFocus && !editorHasSelection && editorLangId==python "
+			},
+			{
+				"command": "cqh-python-import-helper.get_parent_args_dict",
+				"key": "alt+]",
+				"when": "editorTextFocus && !editorHasSelection && editorLangId==python"
+			},
+			{
+				"command": "cqh-python-import-helper.get_parent_name",
+				"key": "alt+[",
+				"when": "editorTextFocus && !editorHasSelection && editorLangId==python"
+			},
+			{
+                "command": "cqh-python-import-helper.dict_unpack",
+                "key": "alt+i",
+                "when": "editorTextFocus && !editorHasSelection && editorLangId==python"
+            },
+
+			{
+                "command": "cqh-python-import-helper.dict_prepend",
+                "key": "alt+u",
+                "when": "editorTextFocus && !editorHasSelection && editorLangId==python"
+            },
+
+			{
+                "command": "cqh-python-import-helper.get_left_pattern",
+                "key": "alt+h",
+                "when": "editorTextFocus && !editorHasSelection && editorLangId==python"
+            },
+			{
+                "command": "cqh-python-import-helper.get_last_if_variable",
+                "key": "alt+\\",
+                "when": "editorTextFocus && !editorHasSelection && editorLangId==python"
+            },
+			{
+                "command": "cqh-python-import-helper.get_last_line_variable",
+                "key": "alt+`",
+                "when": "editorTextFocus && !editorHasSelection && editorLangId==python"
+            },
+			{
+                "command": "cqh-python-import-helper.show_var_list",
+                "key": "alt+n",
+                "when": "editorTextFocus && !editorHasSelection && editorLangId==python"
+            },
+			{
+                "command": "cqh-python-import-helper.get_current_filename",
+                "key": "alt+k f",
+                "when": "editorTextFocus && !editorHasSelection"
+            },
+            {
+                "command": "cqh-python-import-helper.get_current_classname",
+                "key": "alt+k c",
+                "when": "editorTextFocus && !editorHasSelection && editorLangId==python"
+            },
+			{
+                "command": "cqh-python-import-helper.node-format",
+                "key": "alt+k n",
+                "when": "editorTextFocus && editorHasSelection && editorLangId==python"
+            },
+			{
+                "command": "cqh-python-import-helper.handler-var",
+                "key": "alt+c",
+                "when": "editorTextFocus && editorLangId==python"
+            },
+			{
+                "command": "cqh-python-import-helper.insert-last-import",
+                "key": "alt+k l",
+                "when": "editorTextFocus && !editorHasSelection && editorLangId==python "
+            },
+			{
+                "command": "cqh-python-import-helper.select-history-cusor",
+                "key": "alt+k s",
+                "when": "editorTextFocus && !editorHasSelection && editorLangId==python"
+            },
+
+			{
+                "command": "cqh-python-import-helper.get_var_from_comment",
+                "key": "alt+b c",
+                "when": "editorTextFocus && !editorHasSelection && editorLangId==python"
+            },
+            {
+                "command": "cqh-python-import-helper.get_var_from_model",
+                "key": "alt+b m",
+                "when": "editorTextFocus && !editorHasSelection && editorLangId==python"
+            }
 		]
 	},
 	"scripts": {
