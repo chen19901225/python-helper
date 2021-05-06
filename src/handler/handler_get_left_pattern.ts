@@ -116,6 +116,7 @@ export function left_pattern_convert_list(param: string): Array<string> {
      * 1. this.name = d => this.name =d.name
      * 2. this.d["name"] = d => this.d["name"] = d.name
      * 3. d["name"] = c. => d["name"] = c.name
+     * 4. ("a", ) => show a
      */
 
     let out: Array<string> = []
@@ -128,6 +129,15 @@ export function left_pattern_convert_list(param: string): Array<string> {
             }
         }
         return num;
+    }
+    if (param.startsWith("(")) {
+        param = param.trim();
+        if (param.endsWith(",")) {
+            let element = param.slice(1, param.length)
+            element = element.trim();
+            out.push(element.slice(1, element.length))
+            return out;
+        }
     }
     if (count_ch(param, ".") > 1) {
         // 只处理这种 this.name.test, 不处理this.name__test.d 中的name__test
