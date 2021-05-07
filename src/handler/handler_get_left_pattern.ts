@@ -10,6 +10,10 @@ function _format(text: string): string {
 
 
 export function get_insert_context(text: string): [boolean, string] {
+    if (text.indexOf("==") > -1) {
+        let pattern = text.split("==")[0];
+        return [true, _format(pattern)];
+    }
     let match = /^\s*([^=]+)=.*$/.exec(text);
     if (match) {
         // 获取=左边的内容
@@ -50,7 +54,7 @@ export function get_insert_context(text: string): [boolean, string] {
     // 
     // 匹配("a","")
     match = /^\s*\("([^"]+)"\s*,.*$/.exec(text)
-    if(match) {
+    if (match) {
         let pattern = match[1];
         return [true, _format(pattern)];
     }
@@ -124,6 +128,7 @@ export function left_pattern_convert_list(param: string): Array<string> {
      * 2. this.d["name"] = d => this.d["name"] = d.name
      * 3. d["name"] = c. => d["name"] = c.name
      * 4. ("a", ) => show a
+     * 5. cls.name == 
      */
 
     let out: Array<string> = []
