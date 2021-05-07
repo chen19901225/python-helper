@@ -47,6 +47,13 @@ export function get_insert_context(text: string): [boolean, string] {
         return [true, _format(pattern)];
         // return;
     }
+    // 
+    // 匹配("a","")
+    match = /^\s*\("([^"]+)"\s*,.*$/.exec(text)
+    if(match) {
+        let pattern = match[1];
+        return [true, _format(pattern)];
+    }
     return [false, ""]
 }
 
