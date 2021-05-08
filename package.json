@@ -2,7 +2,7 @@
 	"name": "python-helper",
 	"displayName": "python-helper",
 	"description": "",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"engines": {
 		"vscode": "^1.55.0"
 	},
@@ -14,11 +14,15 @@
 		"Other"
 	],
 	"activationEvents": [
-		"*"
+		"onLanguage:python"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
+            {
+                "command": "cqh-python-import-helper.move_op_end",
+                "title": "cqh-python-import-helper move op end"
+            },
 			{
 				"command": "cqh-python-import-helper.import-upgrade",
 				"title": "cqh python import import upgrade"
@@ -235,7 +239,13 @@
                 "command": "cqh-python-import-helper.get_var_from_model",
                 "key": "alt+b m",
                 "when": "editorTextFocus && !editorHasSelection && editorLangId==python"
+            },
+            {
+                "command": "cqh-python-import-helper.move_op_end",
+                "key": "alt+.",
+                "when": "editorTextFocus && !editorHasSelection && editorLangId==python"
             }
+
 		]
 	},
 	"scripts": {

@@ -239,6 +239,9 @@ export function activate(context: vscode.ExtensionContext) {
 		get_var_from_model(textEdit, edit);
 	})
 	context.subscriptions.push(get_var_from_model_disposable);
+
+	//
+	
 }
 
 // this method is called when your extension is deactivated
