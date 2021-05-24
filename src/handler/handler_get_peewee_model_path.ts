@@ -7,6 +7,7 @@ export function get_peewee_model_path(textEditor: vscode.TextEditor, edit: vscod
     let currentLine = textEditor.selection.active.line;
     let lines = text.split(/\r?\n/);
     let [model_flag, insert_model] = search_previous_model_line(lines, currentLine);
+    console.log("model_flag", model_flag, ",text:", insert_model);
     // let activeEditor = textEditor.selection.active;
     if (model_flag) {
         textEditor.insertSnippet(new vscode.SnippetString(insert_model), textEditor.selection.active);
@@ -25,7 +26,7 @@ export function get_peewee_model_path(textEditor: vscode.TextEditor, edit: vscod
 
 
 function search_previous_model_line(lines: Array<string>, currentLine: number): [boolean, string] {
-    let endList: Array<string> = ["select_with_expression(", "get_or_none(", "_get_or_none("]
+    let endList: Array<string> = [".select_with_expression(", ".get_or_none(", "._get_or_none("]
     for (let i = currentLine; i >= Math.max(0, currentLine - 100); i--) {
         let text = lines[i];
         for (let endStr of endList) {
@@ -33,14 +34,16 @@ function search_previous_model_line(lines: Array<string>, currentLine: number): 
                 let ele = text.slice(0, text.length - endStr.length);
                 let stack: Array<string> = []
                 for (let j = ele.length - 1; j >= 0; j--) {
-                    let j_ch = ele[i];
+                    let j_ch = ele[j];
                     if (j_ch == "." || /[_0-9a-zA-Z]/.test(j_ch)) {
                         stack.unshift(j_ch)
+                        continue
                     }
+                    break
                 }
                 let var_str = stack.join("").trim()
-                let var_arr = var_str.split(".")
-                return [true, var_arr.slice(0, var_arr.length - 1).join(".")]
+                // let var_arr = var_str.split(".")
+                return [true, var_str]
             }
         }
 
