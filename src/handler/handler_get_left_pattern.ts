@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { removeVarType } from "../util"
+import { leftPad, removeVarType } from "../util"
 import { service_position_history_add_position } from "../service/service_position_history";
 
 function _format(text: string): string {
@@ -75,11 +75,13 @@ export function insert_left_pattern(textEditor: vscode.TextEditor, edit: vscode.
             return;
         }
         let quickPickItem: vscode.QuickPickItem[] = [];
+        let index = 0;
         for (let word of convert_list) {
             quickPickItem.push({
-                "label": word,
+                "label": leftPad(index, 2) + ". " + word,
                 "description": word
             });
+            index += 1;
         }
         vscode.window.showQuickPick(quickPickItem).then((item) => {
             if (item) {

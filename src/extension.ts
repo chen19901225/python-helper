@@ -10,6 +10,7 @@ import { get_current_class_name } from './handler/handler_get_current_class_name
 import { get_last_if_variable } from './handler/handler_get_last_if_variable';
 import { get_last_line_variable } from './handler/handler_get_last_line_variable';
 import { insert_left_pattern } from './handler/handler_get_left_pattern';
+import { get_peewee_model_path } from './handler/handler_get_peewee_model_path';
 import { get_var_from_comment_runner } from './handler/handler_get_var_from_comment';
 import { get_var_from_model } from './handler/handler_get_var_from_model';
 import { handle_var } from './handler/handler_handle_var';
@@ -239,6 +240,13 @@ export function activate(context: vscode.ExtensionContext) {
 		get_var_from_model(textEdit, edit);
 	})
 	context.subscriptions.push(get_var_from_model_disposable);
+
+	//__get_peewee_model__
+	let get_peewee_model_disposable = vscode.commands.registerTextEditorCommand("cqh-python-import-helper.get_peewee_model", (textEdit, edit) => {
+
+		get_peewee_model_path(textEdit, edit);
+	})
+	context.subscriptions.push(get_peewee_model_disposable);
 
 	//
 	

@@ -158,6 +158,25 @@ show function var by dropdown list
 
 
 
+### get peewee class path (alt+b p)
+
+[//]: cqh_goto: __proj__/src/extension.ts||__get_peewee_model__
+
+* app.models.MUser.get_or_create(
+* app.models.MUser._get_or_raise(
+* app.models.MUser.select_with_expression(
+
+* `* ==`
+
+
+
+
+
+
+
+
+
+
 
 ## context cmd
 
