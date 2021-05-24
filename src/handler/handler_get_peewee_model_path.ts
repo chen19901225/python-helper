@@ -26,7 +26,7 @@ export function get_peewee_model_path(textEditor: vscode.TextEditor, edit: vscod
 
 
 function search_previous_model_line(lines: Array<string>, currentLine: number): [boolean, string] {
-    let endList: Array<string> = [".select_with_expression(", ".get_or_none(", "._get_or_none("]
+    let endList: Array<string> = [".select_with_expression(", "._get_or_raise(", ".get_or_none("]
     for (let i = currentLine; i >= Math.max(0, currentLine - 100); i--) {
         let text = lines[i];
         for (let endStr of endList) {
