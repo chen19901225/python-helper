@@ -2,7 +2,7 @@
     "name": "python-helper",
     "displayName": "python-helper",
     "description": "",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "engines": {
         "vscode": "^1.55.0"
     },
@@ -240,7 +240,7 @@
                 "when": "editorTextFocus && !editorHasSelection && editorLangId==python"
             },
             {
-                "command": "cqh-python-import-helper.get_peeewee_model",
+                "command": "cqh-python-import-helper.get_peewee_model",
                 "key": "alt+b p",
                 "when": "editorTextFocus && !editorHasSelection && editorLangId==python"
             },
