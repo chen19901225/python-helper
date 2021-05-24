@@ -47,6 +47,7 @@ export function get_parent_args(textEditor: vscode.TextEditor, edit: vscode.Text
             if (!activeEditor) {
                 return;
             }
+            service_position_history_add_position(currentPosition);
             let insertedText = getInsertedContent(item.description!);
             activeEditor.insertSnippet(new vscode.SnippetString(insertedText), currentPosition)
         }
