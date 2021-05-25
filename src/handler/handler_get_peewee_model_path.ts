@@ -19,8 +19,28 @@ export function get_peewee_model_path(textEditor: vscode.TextEditor, edit: vscod
         return;
     }
 
+    let [var_flag, insert_var] = search_var_line(lines, currentLine);
+    if (var_flag) {
+        textEditor.insertSnippet(new vscode.SnippetString(insert_var), textEditor.selection.active);
+        return;
+    }
 
 
+
+}
+
+
+function search_var_line(lines: Array<string>, currentLine: number): [boolean, string] {
+    for (let i = currentLine; i >= Math.max(0, currentLine - 100); i--) {
+        let text = lines[i];
+        let equal_index = text.indexOf("=")
+        let comma_index = text.indexOf(":")
+        if (equal_index > -1 && comma_index > -1 && comma_index < equal_index) {
+            let part = text.trim().split("=")[0].split(":")[1].trim()
+            return [true, part];
+        }
+    }
+    return [false, ""]
 }
 
 

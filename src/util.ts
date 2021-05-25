@@ -115,10 +115,17 @@ class LineExtractor {
             this.walk_until(")")
             return;
         }
+        if (ch == "*") {
+            this.run += ch;
+            this.index +=1;
+            return;
+        }
+        
         if (this.run && this.run.length > 0) {
             this.element_list.push(this.run)
             this.run = ""
         }
+        
         this.index += 1;
 
 
