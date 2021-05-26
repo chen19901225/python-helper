@@ -6,23 +6,36 @@ export function get_peewee_model_path(textEditor: vscode.TextEditor, edit: vscod
     let text = document.getText(new vscode.Range(new vscode.Position(0, 0), new vscode.Position(document.lineCount + 1, 0)));
     let currentLine = textEditor.selection.active.line;
     let lines = text.split(/\r?\n/);
-    let [model_flag, insert_model] = search_previous_model_line(lines, currentLine);
-    console.log("model_flag", model_flag, ",text:", insert_model);
+    let result: [number, string] = [-1, ""];
+    let [model_flag, model_line_index, model_text] = search_previous_model_line(lines, currentLine);
     // let activeEditor = textEditor.selection.active;
     if (model_flag) {
-        textEditor.insertSnippet(new vscode.SnippetString(insert_model), textEditor.selection.active);
-        return;
+        if (model_line_index > result[0]) {
+            result = [model_line_index, model_text]
+        }
+        // textEditor.insertSnippet(new vscode.SnippetString(insert_model), textEditor.selection.active);
+        // return;
     }
-    let [equal_flag, insert_equal] = search_previous_equal_line(lines, currentLine);
+    let [equal_flag, equal_line_index, equal_text] = search_previous_equal_line(lines, currentLine);
     if (equal_flag) {
-        textEditor.insertSnippet(new vscode.SnippetString(insert_equal), textEditor.selection.active);
-        return;
+        if (equal_line_index > result[0]) {
+            result = [equal_line_index, equal_text]
+        }
+        // textEditor.insertSnippet(new vscode.SnippetString(insert_equal), textEditor.selection.active);
+        // return;
     }
 
-    let [var_flag, insert_var] = search_var_line(lines, currentLine);
+    let [var_flag, var_line_index, var_text] = search_var_line(lines, currentLine);
     if (var_flag) {
-        textEditor.insertSnippet(new vscode.SnippetString(insert_var), textEditor.selection.active);
-        return;
+        if(var_line_index > result[0]) {
+            result = [var_line_index, var_text]
+        }
+        // textEditor.insertSnippet(new vscode.SnippetString(insert_var), textEditor.selection.active);
+        // return;
+    }
+
+    if(result[1].length > 0) {
+        textEditor.insertSnippet(new vscode.SnippetString(result[1]), textEditor.selection.active);
     }
 
 
@@ -30,22 +43,22 @@ export function get_peewee_model_path(textEditor: vscode.TextEditor, edit: vscod
 }
 
 
-function search_var_line(lines: Array<string>, currentLine: number): [boolean, string] {
+function search_var_line(lines: Array<string>, currentLine: number): [boolean,number, string] {
     for (let i = currentLine; i >= Math.max(0, currentLine - 100); i--) {
         let text = lines[i];
         let equal_index = text.indexOf("=")
         let comma_index = text.indexOf(":")
         if (equal_index > -1 && comma_index > -1 && comma_index < equal_index) {
             let part = text.trim().split("=")[0].split(":")[1].trim()
-            return [true, part];
+            return [true,i, part];
         }
     }
-    return [false, ""]
+    return [false, -1, ""]
 }
 
 
 
-function search_previous_model_line(lines: Array<string>, currentLine: number): [boolean, string] {
+function search_previous_model_line(lines: Array<string>, currentLine: number): [boolean, number, string] {
     let endList: Array<string> = [".select_with_expression(", "._get_or_raise(", ".get_or_none("]
     for (let i = currentLine; i >= Math.max(0, currentLine - 100); i--) {
         let text = lines[i];
@@ -63,23 +76,23 @@ function search_previous_model_line(lines: Array<string>, currentLine: number): 
                 }
                 let var_str = stack.join("").trim()
                 // let var_arr = var_str.split(".")
-                return [true, var_str]
+                return [true, i, var_str]
             }
         }
 
     }
-    return [false, ""]
+    return [false, -1, ""]
 }
 
-function search_previous_equal_line(lines: Array<string>, currentLine: number): [boolean, string] {
+function search_previous_equal_line(lines: Array<string>, currentLine: number): [boolean, number, string] {
     for (let i = currentLine; i >= Math.max(0, currentLine - 100); i--) {
         let text = lines[i];
         if (text.indexOf("==") > -1) {
             let firstVar = text.split("==")[0].trim();
             let pieces = firstVar.split(".")
-            return [true, pieces.slice(0, pieces.length - 1).join(".")];
+            return [true, i, pieces.slice(0, pieces.length - 1).join(".")];
 
         }
     }
-    return [false, ""]
+    return [false, -1, ""]
 }
