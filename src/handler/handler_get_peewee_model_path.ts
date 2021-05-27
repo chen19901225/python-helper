@@ -35,7 +35,7 @@ export function get_peewee_model_path(textEditor: vscode.TextEditor, edit: vscod
 }
 
 
-function search_var_line(text: string): [boolean, string] {
+export function search_var_line(text: string): [boolean, string] {
     let equal_index = text.indexOf("=")
     let comma_index = text.indexOf(":")
     if (equal_index > -1 && comma_index > -1 && comma_index < equal_index) {
@@ -50,8 +50,12 @@ function search_var_line(text: string): [boolean, string] {
 
 
 
-function search_previous_model_line(text: string): [boolean, string] {
-    let endList: Array<string> = [".select_with_expression(", "._get_or_raise(", ".get_or_none("]
+export function search_previous_model_line(text: string): [boolean, string] {
+    let endList: Array<string> = [".select_with_expression(",
+                                    ".select_with_expression([",
+                                "._get_or_raise(", 
+                                "._get_or_raise([", 
+                                ".get_or_none("]
     for (let endStr of endList) {
         if (text.endsWith(endStr)) {
             let ele = text.slice(0, text.length - endStr.length);
@@ -74,7 +78,7 @@ function search_previous_model_line(text: string): [boolean, string] {
     return [false, ""]
 }
 
-function search_previous_equal_line(text: string): [boolean, string] {
+export function search_previous_equal_line(text: string): [boolean, string] {
     if (text.indexOf("==") > -1) {
         let firstVar = text.split("==")[0].trim();
         let pieces = firstVar.split(".")
