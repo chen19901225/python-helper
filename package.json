@@ -2,7 +2,7 @@
     "name": "python-helper",
     "displayName": "python-helper",
     "description": "",
-    "version": "0.0.17",
+    "version": "0.0.18",
     "engines": {
         "vscode": "^1.55.0"
     },

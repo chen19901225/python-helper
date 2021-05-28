@@ -7,7 +7,7 @@ export function get_peewee_model_path(textEditor: vscode.TextEditor, edit: vscod
     let currentLine = textEditor.selection.active.line;
     let lines = text.split(/\r?\n/);
     let result: [number, string] = [-1, ""];
-    for (let i = currentLine; i >= Math.max(0, i - 100); i++) {
+    for (let i = currentLine; i >= Math.max(0, i - 100); i--) {
         let text = lines[i];
         let [model_flag, model_text] = search_previous_model_line(text);
         if (model_flag) {

@@ -26,6 +26,7 @@ suite('get peewee model test', () => {
             ["app.models.MUser.select_with_expression([", "app.models.MUser"],
             ["app.models.MUser.select_with_expression(", "app.models.MUser"],
             ["app.models.MUser.get_or_none(", "app.models.MUser"],
+            ["record_ader: app.models.MAder = app.models.MAder._get_or_raise([", "app.models.MAder"],
             ["app.models.MUser._get_or_raise([", "app.models.MUser"],
             ["app.models.MUser._get_or_raise(", "app.models.MUser"],
         ]
@@ -40,6 +41,7 @@ suite('get peewee model test', () => {
     test('var test', () => {
         let table: Array<[string, string]> = [
             ["user:app.models.MUser = ", "app.models.MUser"],
+            ["record_ader: app.models.MAder = app.models.MAder._get_or_raise([", "app.models.MUser"],
         ]
         for (let [source, expected] of table) {
             let [flag, result] = search_var_line(source)
