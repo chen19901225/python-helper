@@ -64,69 +64,19 @@ export function getSelectRange(lineText: string): [boolean, [number, number]] {
             break
         }
     }
-    if (!hasFoundStart) {
-        return [false, result];
-    }
-    let walk_flag: [boolean, number] = [true, 0];
-    let fn_walk = (index: number, search_list:string[]) => {
-        let textLength = lineText.length;
-        let ch = lineText[index];
-        let map: { [name: string]: string } = {
-            "{": "}",
-            "'": "'",
-            '"': '"',
-            "[": ']',
-            "(": ")"
+
+    for (let j = lineText.length - 1; j >= 0; j--) {
+        let ch = lineText[j];
+        if (/[_A-Za-z0-9]/.test(ch)) {
+            return [true, [start_index, j + 1]];
         }
-        if (search_list.length == 0) {
-            if (textLength <= index) {
-                // meet lineTextEnd
-                walk_flag[1] = index;
-                return;
-            }
-
-            if (/[\\._a-zA-Z0-9]/.test(ch)) {
-                // is normal var
-                fn_walk(index + 1, search_list);
-                return
-            }
-
-            if (ch in map) {
-                fn_walk(index + 1, [...search_list, map[ch]]);
-                return
-            }
-
-            // not match all cases
-            walk_flag[1] = index;
-
-
-            return;
+        if ([")", "]", "'", '"'].indexOf(ch) > -1) {
+            return [true, [start_index, j + 1]];
         }
-        // not found search
-        if (textLength <= index) {
-            walk_flag[0] = false;
-            return;
-        }
-        if (ch != search_list[search_list.length-1]) {
-            if(ch in map) {
-                fn_walk(index+1, [...search_list, map[ch]])
-            } else {
-                fn_walk(index + 1, search_list);
-
-            }
-
-            return;
-        }
-        // ch == search
-        fn_walk(index + 1, search_list.slice(0, search_list.length-1));
-        return;
     }
 
-    fn_walk(start_index, []);
-    if (!walk_flag[0]) {
-        return [false, result]
-    }
-    return [true, [start_index, walk_flag[1]]];
+    // return [true, [start_index, walk_flag[1]]]
+    return [false, [0, 0]]
 
 
 
