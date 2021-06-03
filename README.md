@@ -169,7 +169,17 @@ show function var by dropdown list
 * `* ==`
 
 
+### select_expression (alt+b s)
 
+[//]: cqh_goto: __proj__/src/extension.ts||__select_expression__
+
+
+* `'name': app.models.MUser` => `app.models.MUser`
+* `'name': app.models.MUser,` => `app.models.MUser`
+
+not support
+
+* `'name': app.models.MUser),` => `app.models.MUser`
 
 
 

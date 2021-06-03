@@ -2,7 +2,7 @@
     "name": "python-helper",
     "displayName": "python-helper",
     "description": "",
-    "version": "0.0.18",
+    "version": "0.0.19",
     "engines": {
         "vscode": "^1.55.0"
     },
@@ -19,6 +19,10 @@
     "main": "./dist/extension.js",
     "contributes": {
         "commands": [
+            {
+                "command": "cqh-python-import-helper.select_expression",
+                "title": "cqh-python-import-helper.select_expression"
+            },
             {
                 "command": "cqh-python-import-helper.move_op_end",
                 "title": "cqh-python-import-helper move op end"
@@ -152,6 +156,11 @@
             {
                 "command": "cqh-python-import-helper.import-upgrade",
                 "key": "alt+k u",
+                "when": "editorTextFocus && !editorHasSelection && editorLangId==python"
+            },
+            {
+                "command": "cqh-python-import-helper.select_expression",
+                "key": "alt+b w",
                 "when": "editorTextFocus && !editorHasSelection && editorLangId==python"
             },
             {

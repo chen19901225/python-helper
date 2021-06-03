@@ -19,6 +19,7 @@ import { insert_last_import } from './handler/handler_insert_last_import';
 import { move_op_end } from './handler/handler_move_op_end';
 import { node_format } from './handler/handler_node_format';
 import { get_parent_args, get_parent_name } from './handler/handler_parent';
+import { select_expression } from './handler/handler_select_expression';
 import { select_history_cusor } from './handler/handler_select_history_cursor';
 import { show_var_list } from './handler/handler_show_var_list';
 import { tornado_export_class_to_urls } from './handler/handler_tornado_export_class_to_urls';
@@ -248,7 +249,11 @@ export function activate(context: vscode.ExtensionContext) {
 	})
 	context.subscriptions.push(get_peewee_model_disposable);
 
-	//
+	//__select_expression__
+	let select_expression_disposable = vscode.commands.registerTextEditorCommand("cqh-python-import-helper.select_expression", (textEdit, edit) => {
+		select_expression(textEdit, edit);
+	})
+	context.subscriptions.push(select_expression_disposable)
 	
 }
 
