@@ -35,6 +35,16 @@ export function getSelectRange(lineText: string): [boolean, [number, number]] {
             start_index = index;
             break;
         }
+        if (ch == "=") {
+            // match models.Name==record.user.name
+            flag = true;
+            if (lineText[index + 1] == "=") {
+                start_index = index + 1;
+            } else {
+                start_index = index;
+            }
+            break;
+        }
         index += 1;
     }
     if (!flag) {
@@ -58,30 +68,31 @@ export function getSelectRange(lineText: string): [boolean, [number, number]] {
         return [false, result];
     }
     let walk_flag: [boolean, number] = [true, 0];
-    let fn_walk = (index: number, search: string = "") => {
+    let fn_walk = (index: number, search_list:string[]) => {
         let textLength = lineText.length;
         let ch = lineText[index];
-        if (search == "") {
+        let map: { [name: string]: string } = {
+            "{": "}",
+            "'": "'",
+            '"': '"',
+            "[": ']',
+            "(": ")"
+        }
+        if (search_list.length == 0) {
             if (textLength <= index) {
                 // meet lineTextEnd
-                walk_flag[1] = index - 1;
+                walk_flag[1] = index;
                 return;
             }
 
-            if (/[_a-zA-Z0-9]/.test(ch)) {
+            if (/[\\._a-zA-Z0-9]/.test(ch)) {
                 // is normal var
-                fn_walk(index + 1, "");
+                fn_walk(index + 1, search_list);
                 return
             }
-            let map: { [name: string]: string } = {
-                "{": "}",
-                "'": "'",
-                '"': '"',
-                "[": ']',
-                "(": ")"
-            }
+
             if (ch in map) {
-                fn_walk(index + 1, map[ch]);
+                fn_walk(index + 1, [...search_list, map[ch]]);
                 return
             }
 
@@ -96,16 +107,22 @@ export function getSelectRange(lineText: string): [boolean, [number, number]] {
             walk_flag[0] = false;
             return;
         }
-        if (ch != search) {
-            fn_walk(index + 1, search);
+        if (ch != search_list[search_list.length-1]) {
+            if(ch in map) {
+                fn_walk(index+1, [...search_list, map[ch]])
+            } else {
+                fn_walk(index + 1, search_list);
+
+            }
+
             return;
         }
         // ch == search
-        fn_walk(index + 1, "");
+        fn_walk(index + 1, search_list.slice(0, search_list.length-1));
         return;
     }
 
-    fn_walk(0, "");
+    fn_walk(start_index, []);
     if (!walk_flag[0]) {
         return [false, result]
     }
