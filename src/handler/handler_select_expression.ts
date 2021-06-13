@@ -10,18 +10,46 @@ export function select_expression(textEditor: vscode.TextEditor, edit: vscode.Te
 
     let selection = textEditor.selection.active;
     let document = textEditor.document;
-    let lineText = document.lineAt(selection.line);
-    let [flag, range] = getSelectRange(lineText.text)
+
+    let quickitemList: vscode.QuickPickItem[] = [];
+    // for()
+    quickitemList.push({
+        "label": "01.right_part",
+        "description": "right_part"
+    })
+    vscode.window.showQuickPick(quickitemList).then(item => {
+        if (item) {
+            let activeEditor = vscode.window.activeTextEditor;
+            let lineText = document.lineAt(selection.line);
+            let description = item.description!;
+            if (description === "right_part") {
+                select_right_part(selection.line, lineText.text, activeEditor!);
+                return;
+            }
+
+            // activeEditor.insertSnippet(new vscode.SnippetString(item.description), currentPosition)
+
+            // edit.insert(currentPosition, item.description);
+        }
+    })
+
+
+
+
+
+
+
+
+}
+function select_right_part(line: number, text: string, textEditor: vscode.TextEditor) {
+    let [flag, range] = getSelectRange(text)
     if (flag) {
         // 设置选中
         textEditor.selections = [new vscode.Selection(
-            new vscode.Position(selection.line, range[0]),
-            new vscode.Position(selection.line, range[1]),
+            new vscode.Position(line, range[0]),
+            new vscode.Position(line, range[1]),
         )]
     }
-
-
-
 }
 
 export function getSelectRange(lineText: string): [boolean, [number, number]] {
