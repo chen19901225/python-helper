@@ -12,6 +12,7 @@ export function file_name(textEditor: vscode.TextEditor, edit: vscode.TextEditor
     let options = [
         ["raw", "raw"],
         ["raw_without_prefix", "raw_without_prefix"],
+        ["raw_without_suffix", "raw_without_suffix"], 
         ["class_style", "ClassStyle"],
         ["class_style_without_prefix", "class_style_without_prefix"]
     ]
@@ -46,6 +47,9 @@ export function convert_filename(name: string, kind: string): string {
 
     if (kind === 'raw_without_prefix') {
         return elements.slice(1).join('_');
+    }
+    if(kind === "raw_without_suffix") {
+        return elements.slice(0, elements.length-1).join("_");
     }
     if (kind === 'class_style') {
         elements = elements.map((value) => {

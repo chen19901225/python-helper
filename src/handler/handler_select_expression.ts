@@ -17,6 +17,12 @@ export function select_expression(textEditor: vscode.TextEditor, edit: vscode.Te
         "label": "01.right_part",
         "description": "right_part"
     })
+    let activeEditor = vscode.window.activeTextEditor;
+    let lineText = document.lineAt(selection.line);
+    select_right_part(selection.line, lineText.text, activeEditor!);
+    return;
+    
+
     vscode.window.showQuickPick(quickitemList).then(item => {
         if (item) {
             let activeEditor = vscode.window.activeTextEditor;
@@ -26,6 +32,7 @@ export function select_expression(textEditor: vscode.TextEditor, edit: vscode.Te
                 select_right_part(selection.line, lineText.text, activeEditor!);
                 return;
             }
+            
 
             // activeEditor.insertSnippet(new vscode.SnippetString(item.description), currentPosition)
 
