@@ -38,12 +38,14 @@ export function file_name(textEditor: vscode.TextEditor, edit: vscode.TextEditor
 }
 
 export function convert_filename(name: string, kind: string): string {
-    if (kind === 'raw') {
-        return name;
-    }
+    
     let elements = name.split("_");
     /// 处理handler__name__ext.py这种情况
     elements = elements.filter((v) => { return v != "" })
+
+    if (kind === 'raw') {
+        return elements.join("_");
+    }
 
     if (kind === 'raw_without_prefix') {
         return elements.slice(1).join('_');
