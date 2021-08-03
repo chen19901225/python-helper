@@ -50,7 +50,9 @@ function search_previous_query_lines(text: string, currentLineNo: number): [bool
             let previous_line_text = lines[i - 1].trim();
             if (previous_line_match.indexOf(previous_line_text) > -1) { // 上一行结果是对的
                 // 只读下面的一行
+                is_match = true;
                 document_line_list.push(lines[i + 1])
+                break
             }
         }
 
