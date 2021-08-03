@@ -185,6 +185,8 @@ not support
 
 ### insert query vars list (alt+b q)
 
+[//]: cqh_goto: __proj__/src/extension.ts||__get_var_from_query__
+
 full example:
 
 ```
