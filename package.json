@@ -2,7 +2,7 @@
     "name": "python-helper",
     "displayName": "python-helper",
     "description": "",
-    "version": "0.0.28",
+    "version": "0.0.29",
     "engines": {
         "vscode": "^1.55.0"
     },
@@ -129,7 +129,7 @@
             },
             {
                 "command": "cqh-python-import-helper.get_var_from_query",
-                "title": "cqh-python-import-helper.get_var_from_query"
+                "title": "cqh-python-import-helper get var from query"
             }
         ],
         "menus": {
