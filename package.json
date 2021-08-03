@@ -2,7 +2,7 @@
     "name": "python-helper",
     "displayName": "python-helper",
     "description": "",
-    "version": "0.0.30",
+    "version": "0.0.31",
     "engines": {
         "vscode": "^1.55.0"
     },
@@ -18,6 +18,18 @@
     ],
     "main": "./dist/extension.js",
     "contributes": {
+        "configuration": {
+            "properties": {
+                "python-helper.query_name": {
+                    "type": "string",
+                    "default": "cqh_query"
+                },
+                "python-helper.comment_name": {
+                    "type": "string",
+                    "default": "cqh_comment"
+                }
+            }
+        },
         "commands": [
             {
                 "command": "cqh-python-import-helper.select_expression",

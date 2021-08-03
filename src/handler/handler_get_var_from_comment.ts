@@ -1,7 +1,12 @@
 import { posix } from "path";
 import * as vscode from "vscode";
+import { getConfig } from "../config";
 
-let comment_start = "# cqh_comment?"
+// let comment_start = "# cqh_comment?"
+
+function get_comment_tag(): string {
+    return "# " + getConfig().comment_name + "?"
+}
 
 export function get_var_from_comment_runner(textEditor: vscode.TextEditor, edit: vscode.TextEditorEdit) {
     let document = textEditor.document;
@@ -17,6 +22,7 @@ export function get_var_from_comment_runner(textEditor: vscode.TextEditor, edit:
 
 function handle_with_comment(comment_line: string, document_line: Array<string>, position: vscode.Position, activeEditor: vscode.TextEditor) {
     let select_pos = 0;
+    let comment_start = get_comment_tag();
     let comment_query = comment_line.slice(comment_start.length);
     let item_list = comment_query.split("&");
     let d: { [key: string]: string } = {}
@@ -55,6 +61,7 @@ function search_previous_comment_lines(text: string, currentLineNo: number): [bo
     let comment_line: string = "";
     let document_line_list: Array<string> = []
     let is_match = false;
+    let comment_start = get_comment_tag()
     for (let i = currentLineNo; i >= Math.max(0, currentLineNo - 100); i--) {
         let walk_line_text = lines[i].trim();
         if (walk_line_text.startsWith(comment_start)) {

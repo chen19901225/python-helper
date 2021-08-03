@@ -1,7 +1,10 @@
 import { posix } from "path";
 import * as vscode from "vscode";
+import { getConfig } from "../config";
 
 let comment_start = "# cqh_comment?"
+
+
 
 /**
  *如何确定开始行呢， 开始行以`class ` 开头，并且没有空格

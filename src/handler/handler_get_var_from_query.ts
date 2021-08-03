@@ -1,7 +1,14 @@
 import { posix } from "path";
 import * as vscode from "vscode";
+import { getConfig } from "../config";
 
-let query_start = "# cqh_query?"
+// let query_start = "# cqh_query?"
+
+
+export function get_query_tag(): string {
+    return "# " + getConfig().query_name + "?"
+}
+
 
 export function get_var_from_query_runner(textEditor: vscode.TextEditor, edit: vscode.TextEditorEdit) {
     let document = textEditor.document;
@@ -45,7 +52,7 @@ function search_previous_query_lines(text: string, currentLineNo: number): [bool
     let is_match = false;
     for (let i = currentLineNo; i >= Math.max(0, currentLineNo - 100); i--) {
         let walk_line_text = lines[i].trim();
-        if (walk_line_text.startsWith(query_start)) {
+        if (walk_line_text.startsWith(get_query_tag())) {
             let previous_line_match = ["'''", '"""']
             let previous_line_text = lines[i - 1].trim();
             if (previous_line_match.indexOf(previous_line_text) > -1) { // 上一行结果是对的
