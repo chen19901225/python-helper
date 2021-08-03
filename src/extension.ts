@@ -13,6 +13,7 @@ import { insert_left_pattern } from './handler/handler_get_left_pattern';
 import { get_peewee_model_path } from './handler/handler_get_peewee_model_path';
 import { get_var_from_comment_runner } from './handler/handler_get_var_from_comment';
 import { get_var_from_model } from './handler/handler_get_var_from_model';
+import { get_var_from_query_runner } from './handler/handler_get_var_from_query';
 import { handle_var } from './handler/handler_handle_var';
 import { insert_base } from './handler/handler_insert_base';
 import { insert_last_import } from './handler/handler_insert_last_import';
@@ -235,6 +236,13 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(get_var_from_comment_disposable);
 
+	//__get_var_from_query__
+	let get_var_from_query_disposable = vscode.commands.registerTextEditorCommand("cqh-python-import-helper.get_var_from_query", (textEdit, edit) => {
+		get_var_from_query_runner(textEdit, edit);
+	})
+
+	context.subscriptions.push(get_var_from_query_disposable);
+
 	//__get_var_from_model__
 	let get_var_from_model_disposable = vscode.commands.registerTextEditorCommand("cqh-python-import-helper.get_var_from_model", (textEdit, edit) => {
 
@@ -254,7 +262,7 @@ export function activate(context: vscode.ExtensionContext) {
 		select_expression(textEdit, edit);
 	})
 	context.subscriptions.push(select_expression_disposable)
-	
+
 }
 
 // this method is called when your extension is deactivated

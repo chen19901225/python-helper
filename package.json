@@ -2,7 +2,7 @@
     "name": "python-helper",
     "displayName": "python-helper",
     "description": "",
-    "version": "0.0.24",
+    "version": "0.0.26",
     "engines": {
         "vscode": "^1.55.0"
     },
@@ -126,6 +126,10 @@
             {
                 "command": "cqh-python-import-helper.cqh_run_pytest_in_terminal",
                 "title": "cqh-python-import-helper.cqh_run_pytest_in_terminal"
+            },
+            {
+                "command": "cqh-python-import-helper.get_var_from_query",
+                "title": "cqh-python-import-helper.get_var_from_query"
             }
         ],
         "menus": {
@@ -156,6 +160,11 @@
             {
                 "command": "cqh-python-import-helper.import-upgrade",
                 "key": "alt+k u",
+                "when": "editorTextFocus && !editorHasSelection && editorLangId==python"
+            },
+            {
+                "command": "cqh-python-import-helper.get_var_from_query",
+                "key": "alt+b q",
                 "when": "editorTextFocus && !editorHasSelection && editorLangId==python"
             },
             {

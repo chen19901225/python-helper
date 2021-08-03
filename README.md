@@ -183,6 +183,24 @@ not support
 
 
 
+### insert query vars list (alt+b q)
+
+full example:
+
+```
+'''
+# cqh_query?
+name=test&age=18
+'''
+```
+
+tag_name: `# cqh_query`
+
+* `name={}&age={}` => `name, age`
+
+* `name=test&age=18` => `name, age`
+
+
 
 
 
