@@ -168,6 +168,8 @@ show function var by dropdown list
 
 * `* ==`
 
+    [app.models.MUser == ** => `app.models.MUser`
+
 
 ### select_expression (alt+b w)
 

@@ -79,10 +79,20 @@ export function search_previous_model_line(text: string): [boolean, string] {
 }
 
 export function search_previous_equal_line(text: string): [boolean, string] {
+    text = text.trim();
     if (text.indexOf("==") > -1) {
+        // if(text[0])
+        // text = tex
+       
         let firstVar = text.split("==")[0].trim();
         let pieces = firstVar.split(".")
-        return [true, pieces.slice(0, pieces.length - 1).join(".")];
+        let retstr = pieces.slice(0, pieces.length - 1).join(".")
+        // if (retstr[0] == "[")
+        retstr = retstr.trim();
+        if(retstr[0] === "[") {
+            retstr = retstr.slice(1)
+        }
+        return [true, retstr];
 
     }
     return [false, ""]
