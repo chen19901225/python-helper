@@ -183,7 +183,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// __export_class_to_module_end__
 
 	let export_file_disposable = vscode.commands.registerCommand("cqh-python-import-helper.export_file_to_module",async (fileUrl) => {
-		export_file_to_module(fileUrl.path);
+		export_file_to_module(fileUrl.fsPath);
 	})
 	context.subscriptions.push(export_file_disposable);
 
