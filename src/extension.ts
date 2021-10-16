@@ -4,7 +4,7 @@ import * as vscode from 'vscode';
 import { function_apply_self } from './handler/handler_apply_self';
 import { cqh_run_pytest_in_terminal } from './handler/handler_cqh_run_pytest_in_terminal';
 import { handler_dict_prepend, handler_dict_unpack } from './handler/handler_dict_unpack';
-import { export_class_to_module } from './handler/handler_export_class_to_module';
+import { export_class_to_module, export_file_to_module } from './handler/handler_export_class_to_module';
 import { file_name } from './handler/handler_file_name';
 import { get_current_class_name } from './handler/handler_get_current_class_name';
 import { get_last_if_variable } from './handler/handler_get_last_if_variable';
@@ -181,6 +181,11 @@ export function activate(context: vscode.ExtensionContext) {
 		});
 	context.subscriptions.push(exportClassToModuleDisposable);
 	// __export_class_to_module_end__
+
+	let export_file_disposable = vscode.commands.registerCommand("cqh-python-import-helper.export_file_to_module",async (fileUrl) => {
+		export_file_to_module(fileUrl.path);
+	})
+	context.subscriptions.push(export_file_disposable);
 
 	// __tornado_export_class_to_urls__
 	let tornadoExportClassToUrlsDiposable = vscode.commands.registerTextEditorCommand("cqh-python-import-helper.tornado_export_class_to_urls",

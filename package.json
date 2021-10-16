@@ -2,7 +2,7 @@
     "name": "python-helper",
     "displayName": "python-helper",
     "description": "",
-    "version": "0.0.32",
+    "version": "0.0.34",
     "engines": {
         "vscode": "^1.55.0"
     },
@@ -100,6 +100,10 @@
                 "title": "Cqh python export class to module"
             },
             {
+                "command": "cqh-python-import-helper.export_file_to_module",
+                "title": "cqh-python-import-helper.export_file_to_module"
+            },
+            {
                 "command": "cqh-python-import-helper.tornado_export_class_to_urls",
                 "title": "cqh python tornado export class to urls"
             },
@@ -145,6 +149,12 @@
             }
         ],
         "menus": {
+            "explorer/context": [
+                {
+                    "command": "cqh-python-import-helper.export_file_to_module",
+                    "group": "cqh-insert"
+                }
+            ],
             "editor/context": [
                 {
                     "when": "!inOutput && editorTextFocus && editorLangId == python",
