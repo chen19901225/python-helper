@@ -196,6 +196,24 @@ export function generate_insert_string(source: string,
         right_side_list.push(`${source_var}${new_ele}`)
         return false;
     }
+    // a, b = q[ => q[a], q[b]
+    let handle_dict_square = (source_var: string, new_ele:string, is_first: boolean) => {
+        let format_var = source_var.slice(0, source_var.length - 1);
+        right_side_list.push(`${format_var}[${new_ele}]`);
+        return false;
+    }
+    // a, b = q[' => q["a"], q["b"]
+    let handle_dict_square_with_double_quote= (source_var: string, new_ele:string, is_first: boolean) => {
+        let format_var = source_var.slice(0, source_var.length - 2);
+        right_side_list.push(`${format_var}["${new_ele}"]`);
+        return false;
+    }
+    // a, b = q[' => q["a"], q["b"]
+    let handle_dict_square_with_single_quote= (source_var: string, new_ele:string, is_first: boolean) => {
+        let format_var = source_var.slice(0, source_var.length - 2);
+        right_side_list.push(`${format_var}['${new_ele}']`);
+        return false;
+    }
 
 
     for (let ele of element_list) {
@@ -228,7 +246,17 @@ export function generate_insert_string(source: string,
         } else if (source_var.endsWith("_d") || source_var.endsWith("_dict") || source_var.startsWith("d_") || source_var === 'd') {
             //a, d = d => a, b = d[a], d[b]
             current_handle = handle_dict;
-        } else if (source_var.endsWith('("')) {
+        } 
+        else if (source_var.endsWith("[")) {
+            current_handle = handle_dict_square;
+        }
+        else if(source_var.endsWith("['")) {
+            current_handle = handle_dict_square_with_single_quote
+        }
+        else if(source_var.endsWith('["')) {
+            current_handle = handle_dict_square_with_double_quote;
+        }
+        else if (source_var.endsWith('("')) {
             //a, b = q(" => a, b = q("a"), q("n")
             current_handle = handle_func_call_with_double_quote;
         } else if (source_var.endsWith("('")) {
