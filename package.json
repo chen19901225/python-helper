@@ -2,7 +2,7 @@
     "name": "python-helper",
     "displayName": "python-helper",
     "description": "",
-    "version": "0.0.37",
+    "version": "0.0.38",
     "engines": {
         "vscode": "^1.55.0"
     },
@@ -146,6 +146,14 @@
             {
                 "command": "cqh-python-import-helper.get_var_from_query",
                 "title": "cqh-python-import-helper get var from query"
+            },
+            {
+                "command": "cqh-python-import-helper.import_add",
+                "title": "cqh-python-import-helper.import_add"
+            },
+            {
+                "command": "cqh-python-import-helper.import_insert",
+                "title": "cqh-python-import-helper.import_insert"
             }
         ],
         "menus": {
@@ -174,6 +182,16 @@
                 {
                     "when": "!inOutput && editorTextFocus && editorLangId == python",
                     "command": "cqh-python-import-helper.tornado_export_class_to_urls",
+                    "group": "cqh-insert"
+                },
+                {
+                    "when": "!inOutput && editorTextFocus && resourceExtname  == .py && editorHasSelection",
+                    "command": "cqh-python-import-helper.import_add",
+                    "group": "cqh-insert"
+                },
+                {
+                    "when": "!inOutput && editorTextFocus && resourceExtname  == .py && editorHasSelection",
+                    "command": "cqh-python-import-helper.import_insert",
                     "group": "cqh-insert"
                 }
             ]
@@ -289,6 +307,12 @@
                 "key": "alt+.",
                 "when": "editorTextFocus && !editorHasSelection && editorLangId==python"
             }
+        ],
+        "snippets": [
+            {
+                "language": "python",
+                "path": "./snippets/snippets.json"
+            }
         ]
     },
     "scripts": {
@@ -303,19 +327,23 @@
         "test": "node ./out/test/runTest.js"
     },
     "devDependencies": {
-        "@types/vscode": "^1.55.0",
+        "@types/fs-extra": "^9.0.13",
         "@types/glob": "^7.1.3",
         "@types/mocha": "^8.0.4",
         "@types/node": "^12.11.7",
-        "eslint": "^7.19.0",
+        "@types/vscode": "^1.55.0",
         "@typescript-eslint/eslint-plugin": "^4.14.1",
         "@typescript-eslint/parser": "^4.14.1",
+        "eslint": "^7.19.0",
         "glob": "^7.1.6",
         "mocha": "^8.2.1",
+        "ts-loader": "^8.0.14",
         "typescript": "^4.1.3",
         "vscode-test": "^1.5.0",
-        "ts-loader": "^8.0.14",
         "webpack": "^5.19.0",
         "webpack-cli": "^4.4.0"
+    },
+    "dependencies": {
+        "fs-extra": "^10.0.0"
     }
 }

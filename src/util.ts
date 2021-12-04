@@ -1,4 +1,5 @@
 import * as vscode from 'vscode'
+import * as os from "os";
 
 export function try_get_definition(textEditor: vscode.TextEditor, edit: vscode.TextEditorEdit) {
 
@@ -197,4 +198,40 @@ export function leftPad(ele: number, count: number): string {
     let prefix = '0'.repeat(count);
     let final_ele = prefix + ele
     return final_ele.slice(final_ele.length - count)
+}
+
+
+
+export function get_workspace_path(): string {
+    let workspaceRoot = "";
+        if (vscode.workspace.workspaceFolders) {
+            workspaceRoot = vscode.workspace.workspaceFolders[0].uri.fsPath;
+        }
+    return workspaceRoot;
+}
+export function  split_file_content(content: string,  end_line: string): [string[], string[]] {
+    //把文件切分成三个部分
+    let lines = content.split(os.EOL);
+    // let firstLines: Array<string> = [], middleLines: Array<string> = [], endLines: Array<string> = []
+    let firstLines: Array<string> = [], lastLines: string[] = []
+    let linesChoices = [firstLines,  lastLines]
+    let choiceIndex = 0
+    for (let line of lines) {
+        // 不push trim_line的原因是未了保持缩进
+        let trim_line = line.trim()
+        // if (trim_line === "// __export__") {
+        if (trim_line === end_line) {
+            // 不插入start_line
+            choiceIndex = 1
+            continue
+        }
+        
+       
+        linesChoices[choiceIndex].push(line)
+    }
+
+    // return [firstLines.join(os.EOL), middleLines.join(os.EOL), endLines.join(os.EOL)]
+    return [firstLines,lastLines];
+
+
 }

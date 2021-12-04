@@ -15,6 +15,7 @@ import { get_var_from_comment_runner } from './handler/handler_get_var_from_comm
 import { get_var_from_model } from './handler/handler_get_var_from_model';
 import { get_var_from_query_runner } from './handler/handler_get_var_from_query';
 import { handle_var } from './handler/handler_handle_var';
+import { handle_import_add_selected, handle_import_insert_import } from './handler/handler_import';
 import { insert_base } from './handler/handler_insert_base';
 import { insert_last_import } from './handler/handler_insert_last_import';
 import { move_op_end } from './handler/handler_move_op_end';
@@ -267,6 +268,18 @@ export function activate(context: vscode.ExtensionContext) {
 		select_expression(textEdit, edit);
 	})
 	context.subscriptions.push(select_expression_disposable)
+
+	// import_add
+	let import_add_disposable = vscode.commands.registerTextEditorCommand("cqh-python-import-helper.import_add", async(textEdit, edit) => {
+		handle_import_add_selected(textEdit, edit);
+	})
+	context.subscriptions.push(import_add_disposable)
+
+	// __import_insert__
+	let import_insert_disposable = vscode.commands.registerTextEditorCommand("cqh-python-import-helper.import_insert", async(textEdit, edit) => {
+		handle_import_insert_import(textEdit, edit)
+	})
+	context.subscriptions.push(import_insert_disposable)
 
 }
 
