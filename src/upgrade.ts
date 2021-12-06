@@ -8,13 +8,14 @@ export function upgradeDelegate(textEditor: vscode.TextEditor, edit: vscode.Text
     if (isImportStatement) {
         upgradeForImport(textEditor, edit); // 处理import
     } else {
+        // 这个是用来做什么的?
         upgradeForTypeHint(textEditor, edit); // 处理Class的typehint
     }
 }
 
 function upgradeForImport(textEditor: vscode.TextEditor, edit: vscode.TextEditorEdit) {
     const document = textEditor.document;
-    let i = 0;
+    let i = 0; // i表示的是import结束的下一行
     let line: string;
 
     let handle_comment = (i: number) => {
@@ -86,11 +87,12 @@ function upgradeForImport(textEditor: vscode.TextEditor, edit: vscode.TextEditor
 
     }
 
-    // 获取到行号， 改行是import 语句，或者正式代码
+    // 获取到行号， 该行是import 语句，或者正式代码
     let currentLineNo = textEditor.selection.active.line;
     while (1) {
         let [is_ok, new_i] = handle_line(i);
         if (new_i >= currentLineNo) { // current import statement is in the front part, so stop upgrade
+            // 当前行在前面,所以跳过
             return;
         }
         i = new_i;
@@ -132,6 +134,7 @@ function upgradeForImport(textEditor: vscode.TextEditor, edit: vscode.TextEditor
         }
         return currentLineNo;
     }
+    // 获取到代码行的行数
     let CodeLineNo = getCodeLineNoFunc(i);
     if (CodeLineNo >= currentLineNo) {
         return;
@@ -209,7 +212,7 @@ function upgradeForImport(textEditor: vscode.TextEditor, edit: vscode.TextEditor
             textAppendToEmpty(text, i);
         }
     }
-
+    // 删除当行内容
     vscode.commands.executeCommand("editor.action.deleteLines");
 }
 
