@@ -172,6 +172,7 @@ export function handle_import_insert_import(textEditor: vscode.TextEditor, edit:
         vscode.window.showErrorMessage("请选中内容");
         return;
     }
+    let position = textEditor.selection.active;
     let selected_text = document.getText(new vscode.Range(textEditor.selection.start, textEditor.selection.end));
     // 获取到正式的代码行
     let content = fs.readFileSync(current_path, 'utf-8')
@@ -234,6 +235,15 @@ export function handle_import_insert_import(textEditor: vscode.TextEditor, edit:
             let new_content = [import_lines.join(os.EOL), other_lines.join(os.EOL)].join(os.EOL)
             fs.writeFileSync(current_path, new_content, 'utf-8')
             vscode.window.showInformationMessage(`添加import成功 [${current_var}]`)
+            // 设置选中的位置
+            var newPosition = position.with(position.line+1, position.character);
+            var newSelection = new vscode.Selection(newPosition, newPosition);
+            let activeEditor = vscode.window.activeTextEditor;
+            if(activeEditor) {
+                activeEditor.selection = newSelection;
+            }
+            
+
         }
     })
 
