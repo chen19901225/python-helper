@@ -63,7 +63,7 @@ export function get_insert_context(text: string): [boolean, string] {
     }
 
     // 匹配 funcname(abc, "")
-    match = /^\s*[^(]+\("([^"]+)"\s*,.*$/.exec(text)
+    match = /^\s*[^(]+\(([^,]+)\s*,.*$/.exec(text)
     if (match) {
         let pattern = match[1];
         return [true, _format(pattern)];
