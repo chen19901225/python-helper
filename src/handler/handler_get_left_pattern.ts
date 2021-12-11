@@ -31,7 +31,9 @@ export function get_insert_context(text: string): [boolean, string] {
         return [true, _format(pattern)];
         // return;
     }
+    // 'a':
     match = /^\s*'([^']+)'\:.*$/.exec(text);
+    
     if (match) {
         // {
         //  'a':
@@ -41,7 +43,7 @@ export function get_insert_context(text: string): [boolean, string] {
         return [true, _format(pattern)];
         // return;
     }
-
+    //"a":
     match = /^\s*"([^"]+)"\:.*$/.exec(text);
     if (match) {
         // 获取 "a":
@@ -54,6 +56,18 @@ export function get_insert_context(text: string): [boolean, string] {
     // 
     // 匹配("a","")
     match = /^\s*\("([^"]+)"\s*,.*$/.exec(text)
+    if (match) {
+        let pattern = match[1];
+        return [true, _format(pattern)];
+    }
+    // 匹配 a, ""
+    match = /^([^,])+,\s*.*$/.exec(text)
+    if(match) {
+        let pattern = match[1]
+        return [true, _format(pattern)];
+    }
+    // 匹配 func(a, "")
+    match = /^\s*[^(]+\("([^"]+)"\s*,.*$/.exec(text)
     if (match) {
         let pattern = match[1];
         return [true, _format(pattern)];
