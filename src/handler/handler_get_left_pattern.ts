@@ -14,6 +14,7 @@ export function get_insert_context(text: string): [boolean, string] {
         let pattern = text.split("==")[0];
         return [true, _format(pattern)];
     }
+    // a = 
     let match = /^\s*([^=]+)=.*$/.exec(text);
     if (match) {
         // 获取=左边的内容
@@ -60,18 +61,21 @@ export function get_insert_context(text: string): [boolean, string] {
         let pattern = match[1];
         return [true, _format(pattern)];
     }
-    // 匹配 a, ""
-    match = /^([^,])+,\s*.*$/.exec(text)
-    if(match) {
-        let pattern = match[1]
-        return [true, _format(pattern)];
-    }
-    // 匹配 func(a, "")
+
+    // 匹配 funcname(abc, "")
     match = /^\s*[^(]+\("([^"]+)"\s*,.*$/.exec(text)
     if (match) {
         let pattern = match[1];
         return [true, _format(pattern)];
     }
+    // 匹配 a, ""
+    match = /^([^,]+),\s*.*$/.exec(text)
+    if(match) {
+        let pattern = match[1]
+        return [true, _format(pattern)];
+    }
+    // 匹配 func(a, "")
+    
     return [false, ""]
 }
 
